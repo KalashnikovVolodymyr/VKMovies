@@ -34,6 +34,7 @@ import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private static String lang;
     private ImageView imageViewAddToFavourite;
     private ImageView imageViewBigPoster;
     private TextView textViewTitle;
@@ -44,19 +45,14 @@ public class DetailActivity extends AppCompatActivity {
     private ScrollView scrollViewInfo;
     private TextView textViewLabelReviews;
     private TextView textViewLabelTrailers;
-
     private RecyclerView recyclerViewTrailers;
     private RecyclerView recyclerViewReviews;
     private ReviewAdapter reviewAdapter;
     private TrailerAdapter trailerAdapter;
-
     private int id;
     private Movie movie;
     private FavouriteMovie favouriteMovie;
-
     private MainViewModel viewModel;
-
-    private static String lang;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,7 +99,12 @@ public class DetailActivity extends AppCompatActivity {
             finish();
         }
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        movie = viewModel.getMovieById(id);
+        if (intent != null && intent.hasExtra("isItFavour")) {
+            movie = viewModel.getFavouriteMovieById(id);
+        } else {
+            movie = viewModel.getMovieById(id);
+        }
+
         Picasso.get().load(movie.getBigPosterPath()).placeholder(R.drawable.placeholder_large).into(imageViewBigPoster);
         textViewTitle.setText(movie.getTitle());
         textViewOriginalTitle.setText(movie.getOriginalTitle());
@@ -138,7 +139,7 @@ public class DetailActivity extends AppCompatActivity {
         if (reviews.isEmpty()) {
             textViewLabelReviews.setVisibility(View.INVISIBLE);
         }
-        scrollViewInfo.smoothScrollTo(0,0);
+        scrollViewInfo.smoothScrollTo(0, 0);
     }
 
     public void onClickChangeFavourite(View view) {

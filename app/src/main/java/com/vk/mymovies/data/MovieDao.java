@@ -19,6 +19,9 @@ public interface MovieDao {
     @Query("SELECT * FROM movies WHERE id == :movieId")
     Movie getMovieById(int movieId);
 
+    @Query("SELECT * FROM movies WHERE title like :movieTitle")
+    LiveData<List<Movie>> getAllMoviesByTitle(String movieTitle);
+
     @Query("SELECT * FROM favourite_movies WHERE id == :movieId")
     FavouriteMovie getFavouriteMovieById(int movieId);
 

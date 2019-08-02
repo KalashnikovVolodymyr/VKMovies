@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -43,6 +45,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TextView textViewTopRated;
     private TextView textViewPopularity;
     private ProgressBar progressBarLoading;
+
+    private Switch switchLang;
+    private TextView textViewRU;
+    private TextView textViewEN;
+    private TextView autoCompleteTextViewFind;
 
     private MainViewModel viewModel;
 
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return width / 185 > 2 ? width / 185 : 2;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +103,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switchSort = findViewById(R.id.switchSort);
         textViewPopularity = findViewById(R.id.textViewPopularity);
         textViewTopRated = findViewById(R.id.textViewTopRated);
+
+        switchLang = findViewById(R.id.switchLang);
+        switchLang.setChecked(!lang.equals("en"));
+        autoCompleteTextViewFind = findViewById(R.id.autoCompleteTextViewFind);
+
+        textViewRU = findViewById(R.id.textViewRU);
+        textViewEN = findViewById(R.id.textViewEN);
         progressBarLoading = findViewById(R.id.progressBarLoading);
         recyclerViewPosters = findViewById(R.id.recyclerViewPosters);
         recyclerViewPosters.setLayoutManager(new GridLayoutManager(this, getColumnCount()));
@@ -108,6 +123,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 setMethodOfSort(isChecked);
             }
         });
+        switchLang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                lang = isChecked ? "ru":"en";
+                page = 1;
+                downloadData(methodOfSort, page);
+            }
+        });
         switchSort.setChecked(false);
         movieAdapter.setOnPosterClickListener(new MovieAdapter.OnPosterClickListener() {
             @Override
@@ -115,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Movie movie = movieAdapter.getMovies().get(position);
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra("id", movie.getId());
+                //intent.putExtra("isItFavour",false);
                 startActivity(intent);
             }
         });
@@ -135,6 +159,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             }
         });
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                0, COUNTRIES);
+//        autoCompleteTextViewFind = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextViewFind);
+//        ((AutoCompleteTextView) autoCompleteTextViewFind).setAdapter(adapter);
+
     }
 
     public void onClickSetPopularity(View view) {
@@ -204,6 +234,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(@NonNull Loader<JSONObject> loader) {
 
     }
+
+    public void onClickSetRU(View view) {
+        lang = "ru";
+        textViewRU.setTextColor(getResources().getColor(R.color.colorAccent));
+        textViewEN.setTextColor(getResources().getColor(R.color.white_color));
+        switchLang.setChecked(true);
+    }
+
+    public void onClickSetEN(View view) {
+        lang = "en";
+        textViewEN.setTextColor(getResources().getColor(R.color.colorAccent));
+        textViewRU.setTextColor(getResources().getColor(R.color.white_color));
+        switchLang.setChecked(false);
+    }
+
 }
 
 

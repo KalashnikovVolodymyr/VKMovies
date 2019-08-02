@@ -2,19 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
     <Switch
         android:id="@+id/switchSort"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="44dp"
+        android:layout_height="25dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.299"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,10 +23,10 @@
         android:id="@+id/textViewPopularity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="onClickSetPopularity"
         android:text="@string/most_popular"
         android:textColor="@color/white_color"
-        android:onClick="onClickSetPopularity"
         app:layout_constraintBottom_toBottomOf="@+id/switchSort"
         app:layout_constraintEnd_toStartOf="@+id/switchSort"
         app:layout_constraintTop_toTopOf="@+id/switchSort" />
@@ -34,10 +35,10 @@
         android:id="@+id/textViewTopRated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
+        android:onClick="onClickSetTopRated"
         android:text="@string/top_rated"
         android:textColor="@color/white_color"
-        android:onClick="onClickSetTopRated"
         app:layout_constraintBottom_toBottomOf="@+id/switchSort"
         app:layout_constraintStart_toEndOf="@+id/switchSort"
         app:layout_constraintTop_toTopOf="@+id/switchSort" />
@@ -47,19 +48,84 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:padding="1sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchSort" />
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextViewFind" />
 
     <ProgressBar
         android:id="@+id/progressBarLoading"
         android:layout_width="42dp"
         android:layout_height="42dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switchSort"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/switchSort" />
+
+    <Switch
+        android:id="@+id/switchLang"
+        android:layout_width="48dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRU"
+        android:layout_width="26dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:onClick="onClickSetRU"
+        android:text="@string/ru"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/switchLang"
+        app:layout_constraintStart_toEndOf="@+id/switchLang"
+        app:layout_constraintTop_toTopOf="@+id/switchLang" />
+
+    <TextView
+        android:id="@+id/textViewEN"
+        android:layout_width="23dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="onClickSetEN"
+        android:text="@string/en"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/switchLang"
+        app:layout_constraintEnd_toStartOf="@+id/switchLang"
+        app:layout_constraintTop_toTopOf="@+id/switchLang"
+        app:layout_constraintVertical_bias="0.454" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewFind"
+        style="@style/Widget.AppCompat.AutoCompleteTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:completionThreshold="2"
+        android:cursorVisible="false"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:dropDownHeight="match_parent"
+        android:hint="find movies..."
+        android:padding="1dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorDarkGrey"
+        android:textColorLink="@android:color/background_dark"
+        android:textCursorDrawable="@android:drawable/screen_background_dark"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchSort" />
 
 </android.support.constraint.ConstraintLayout>
