@@ -26,6 +26,7 @@ public class FavouriteActivity extends AppCompatActivity {
     private RecyclerView recyclerViewFavouriteMovies;
     private MovieAdapter adapter;
     private MainViewModel viewModel;
+    private static String lang;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,10 +41,12 @@ public class FavouriteActivity extends AppCompatActivity {
         switch (id) {
             case R.id.itemMain:
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("lang",lang);
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
                 Intent intentToFavourite = new Intent(this, FavouriteActivity.class);
+                intentToFavourite.putExtra("lang",lang);
                 startActivity(intentToFavourite);
                 break;
         }
@@ -54,6 +57,12 @@ public class FavouriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("lang")) {
+            lang = intent.getStringExtra("lang");
+        } else {
+            finish();
+        }
         recyclerViewFavouriteMovies = findViewById(R.id.recyclerViewFavouriteMovies);
         recyclerViewFavouriteMovies.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new MovieAdapter();
@@ -77,6 +86,7 @@ public class FavouriteActivity extends AppCompatActivity {
                 Intent intent = new Intent(FavouriteActivity.this, DetailActivity.class);
                 intent.putExtra("id", movie.getId());
                 intent.putExtra("isItFavour",true);
+                intent.putExtra("lang",lang);
                 startActivity(intent);
             }
         });

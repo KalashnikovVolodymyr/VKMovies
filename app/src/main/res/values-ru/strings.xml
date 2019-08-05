@@ -6,8 +6,8 @@
     <string name="item_main">Главная</string>
     <string name="item_favourite">Избранное</string>
     <string name="launch_trailer">Запустить трейлер</string>
-    <string name="top_rated">Высший рейтинг</string>
-    <string name="most_popular">Самое популярное</string>
+    <string name="top_rated">Топ рейтинг</string>
+    <string name="most_popular">Популярные</string>
     <string name="description_poster_of_movie">Постер к фильму</string>
     <string name="description_big_poster">Большой постер к фильму</string>
     <string name="release_date">Дата релиза:</string>
@@ -19,4 +19,5 @@
     <string name="trailers_label">Трейлеры:</string>
     <string name="reviews">Отзывы:</string>
     <string name="app_name">Популярные фильмы</string>
+    <string name="find_movies_by_title">поиск по названию</string>
 </resources>

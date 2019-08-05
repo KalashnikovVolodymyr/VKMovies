@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vk.mymovies.adapters.MovieAdapter;
 import com.vk.mymovies.data.MainViewModel;
@@ -79,7 +80,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 break;
             case R.id.itemFavourite:
                 Intent intentToFavourite = new Intent(this, FavouriteActivity.class);
+                intentToFavourite.putExtra("lang",lang);
                 startActivity(intentToFavourite);
+                break;
+            case R.id.itemFind:
+                Toast.makeText(this, "Soon...", Toast.LENGTH_SHORT).show();
+                Intent intentToSearch = new Intent(this, SearchMovieActivity.class);
+                startActivity(intentToSearch);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -97,7 +104,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lang = Locale.getDefault().getLanguage();
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("lang")) {
+            lang = intent.getStringExtra("lang");
+        } else {
+            lang = Locale.getDefault().getLanguage();
+        }
         loaderManager = LoaderManager.getInstance(this);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         switchSort = findViewById(R.id.switchSort);
@@ -139,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra("id", movie.getId());
                 //intent.putExtra("isItFavour",false);
+                intent.putExtra("lang",lang);
                 startActivity(intent);
             }
         });

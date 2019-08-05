@@ -67,10 +67,12 @@ public class DetailActivity extends AppCompatActivity {
         switch (id) {
             case R.id.itemMain:
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("lang",lang);
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
                 Intent intentToFavourite = new Intent(this, FavouriteActivity.class);
+                intentToFavourite.putExtra("lang",lang);
                 startActivity(intentToFavourite);
                 break;
         }
@@ -81,7 +83,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        lang = Locale.getDefault().getLanguage();
+        //lang = Locale.getDefault().getLanguage();
         imageViewBigPoster = findViewById(R.id.imageViewBigPoster);
         textViewLabelReviews = findViewById(R.id.textViewLabelReviews);
         textViewLabelTrailers = findViewById(R.id.textViewLabelTrailers);
@@ -93,11 +95,14 @@ public class DetailActivity extends AppCompatActivity {
         imageViewAddToFavourite = findViewById(R.id.imageViewAddToFavourite);
         scrollViewInfo = findViewById(R.id.scrollViewInfo);
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("id")) {
-            id = intent.getIntExtra("id", -1);
-        } else {
-            finish();
-        }
+        if (intent != null) {
+            if (intent.hasExtra("id")) {
+                id = intent.getIntExtra("id", -1);
+            }
+            if (intent.hasExtra("lang")) {
+                lang = intent.getStringExtra("lang");
+            }
+        } else finish();
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         if (intent != null && intent.hasExtra("isItFavour")) {
             movie = viewModel.getFavouriteMovieById(id);
