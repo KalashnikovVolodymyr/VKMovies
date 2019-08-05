@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intentToFavourite);
                 break;
             case R.id.itemFind:
-                Toast.makeText(this, "Soon...", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Soon...", Toast.LENGTH_SHORT).show();
                 Intent intentToSearch = new Intent(this, SearchMovieActivity.class);
                 startActivity(intentToSearch);
                 break;
