@@ -1,34 +1,36 @@
 package com.vk.mymovies;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ProgressBar;
 
-import java.util.Locale;
+import com.vk.mymovies.adapters.FindMovieAutoCompleteAdapter;
+import com.vk.mymovies.data.Movie;
+import com.vk.mymovies.utils.DelayAutoCompleteTextView;
+
 
 public class SearchMovieActivity extends AppCompatActivity {
 
     private static String lang;
-    private AutoCompleteTextView autoCompleteTextView;
-    private String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain", "Spanish"
-    };
+    private DelayAutoCompleteTextView delayAutoCompleteTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_movie);
-        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("lang")) {
-            lang = intent.getStringExtra("lang");
-        } else {
-            lang = Locale.getDefault().getLanguage();
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        autoCompleteTextView.setAdapter(adapter);
+        delayAutoCompleteTextView = (DelayAutoCompleteTextView) findViewById(R.id.delayAutoCompleteTextView);
+        delayAutoCompleteTextView.setThreshold(4);
+        delayAutoCompleteTextView.setAdapter(new FindMovieAutoCompleteAdapter(getApplicationContext()));
+        delayAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Movie movie = (Movie) adapterView.getItemAtPosition(position);
+                delayAutoCompleteTextView.setText(movie.getTitle());
+            }
+        });
+
     }
 
 

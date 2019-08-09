@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".SearchMovieActivity">
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
+    <DelayAutoCompleteTextView
+        android:id="@+id/delayAutoCompleteTextView"
         android:layout_width="397dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"

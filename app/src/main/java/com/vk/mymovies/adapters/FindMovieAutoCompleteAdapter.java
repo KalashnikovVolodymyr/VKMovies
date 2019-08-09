@@ -47,11 +47,11 @@ public class FindMovieAutoCompleteAdapter extends BaseAdapter implements Filtera
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.trailer_item, parent, false);
+            convertView = inflater.inflate(R.layout.move_find, parent, false);
         }
         Movie movie = (Movie) getItem(position);
-        ((TextView) convertView.findViewById(R.layout.id.text1)).setText(book.getTitle());
-        ((TextView) convertView.findViewById(R.id.text2)).setText(book.getAuthor());
+        ((TextView) convertView.findViewById(R.id.textMovieTitle)).setText(movie.getTitle());
+        ((TextView) convertView.findViewById(R.id.textMovieTitle2)).setText(movie.getReleaseDate());
 
         return convertView;
     }
@@ -63,7 +63,7 @@ public class FindMovieAutoCompleteAdapter extends BaseAdapter implements Filtera
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null) {
-                    List<Movie> movies = findMovies(mContext, constraint.toString());
+                    List<Movie> movies = findMovies(constraint.toString());
                     // Assign the data to the FilterResults
                     filterResults.values = movies;
                     filterResults.count = movies.size();
